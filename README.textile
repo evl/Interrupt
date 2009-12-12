@@ -1,0 +1,10 @@
+Interrupt announcer
+
+h2. Configuration
+
+Copy @config.lua.sample@ to @config.lua@ and modify as required.
+
+h2. Features
+
+* Announce to any chat type or custom channel
+* Ignores any announcements from anyone not in your party/raid
