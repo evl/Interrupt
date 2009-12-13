@@ -66,9 +66,11 @@ evl_Interrupt:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 local find = _G.string.find
 
 local interruptMessageFilter = function(self, event, text, author, ...)
-	local ignore = true
+	local ignore = false
 	
 	if find(text, "   $") then
+		ignore = true
+
 		if GetNumRaidMembers() > 0 then
 			for i = 1, MAX_RAID_MEMBERS do
 				if UnitName("raid" .. i) == author then
@@ -84,9 +86,11 @@ local interruptMessageFilter = function(self, event, text, author, ...)
 				end
 			end
 		end
-
-		return ignore, text, author
 	end
+	
+	return ignore, text, author, ...
 end
 
---ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", interruptMessageFilter)
+if evl_Interrupt.config.ignoreUnaffiliated then
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", interruptMessageFilter)
+end
