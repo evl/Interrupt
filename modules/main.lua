@@ -34,27 +34,39 @@ local resolveUnit = function(guid)
 	return (UnitGUID("target") and "target") or (guid == UnitGUID("focus") and "focus") or (guid == UnitGUID("mouseover") and "mouseover")
 end
 
+local icons = {"{star}", "{circle}", "{diamond}", "{triangle}", "{moon}", "{square}", "{cross}", "{skull}"}
+
+local getUnitIcon = function(unit)
+	local index = GetRaidTargetIndex(unit)
+	
+	if index then
+		return icons[index]
+	end	
+end
+
 local onEvent = function(self, event, _, eventType, _, sourceName, sourceFlags, destGUID, destName, destFlags, ...)
 	if bit_band(sourceFlags, COMBATLOG_FILTER_ME) == COMBATLOG_FILTER_ME then
 		if eventType == "SPELL_INTERRUPT" then
 			local _, spellName, _, _, destSpellName = ...
-	    local destIcon = CombatLog_String_GetIcon(destFlags)
+			local destUnit = resolveUnit(destGUID)
+	    local destIcon = getUnitIcon(destUnit)
 
 			announce(format("%sed %s%s's %s", spellName, destIcon, destName, destSpellName))
 		elseif eventType == "SPELL_CAST_SUCCESS" then
 			local spellId, spellName = ...
-			local destIcon = CombatLog_String_GetIcon(destFlags)
 
 			if interruptSpells[spellId] then
-				local unit = resolveUnit(destGUID)
-				
-				if not UnitCastingInfo(unit) then
+				local destUnit = resolveUnit(destGUID)
+		    local destIcon = getUnitIcon(destUnit)
+
+				if not UnitCastingInfo(destUnit) then
 					announce(format("Used %s on %s%s", spellName, destIcon, destName))
 				end
 			end
 		elseif eventType == "SPELL_MISSED" and interruptSpells[spellId] then
 			local _, spellName, _, missType = ...
-	    local destIcon = CombatLog_String_GetIcon(destFlags)
+			local destUnit = resolveUnit(destGUID)
+	    local destIcon = getUnitIcon(destUnit)
 
 			announce(format("Missed %s on %s%s (%s)", spellName, destIcon, destName, missType))
 		end
