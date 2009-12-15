@@ -19,10 +19,11 @@ local announce = function(message)
 	
 	if destination then
 		message = message .. "   " -- We use this to filter
+
 		if #destination == 1 then
 			SendChatMessage(message, destination[1])
 		elseif #destination == 2 then
-			SendChatMessage(message, destination[1], nil, destination[2])
+			SendChatMessage(message, destination[1], nil, GetChannelName(destination[2]))
 		end
 	end
 end
@@ -71,7 +72,9 @@ local interruptMessageFilter = function(self, event, text, author, ...)
 	if find(text, "   $") then
 		ignore = true
 
-		if GetNumRaidMembers() > 0 then
+		if UnitName("player") == author then
+			ignore = false
+		elseif GetNumRaidMembers() > 0 then
 			for i = 1, MAX_RAID_MEMBERS do
 				if UnitName("raid" .. i) == author then
 					ignore = false
