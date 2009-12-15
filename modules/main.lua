@@ -3,7 +3,8 @@ local interruptSpells = {
 	[47528] = "Mind Freeze",
 	[6552] = "Pummel",
 	[72] = "Shield Bash",
-	[2139] = "Counterspell"
+	[2139] = "Counterspell",
+	[57994] = "Wind Shear"
 }
 
 local announce = function(message)
