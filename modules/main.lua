@@ -39,10 +39,7 @@ local icons = {"{star}", "{circle}", "{diamond}", "{triangle}", "{moon}", "{squa
 
 local getUnitIcon = function(unit)
 	local index = GetRaidTargetIndex(unit)
-	
-	if index then
-		return icons[index]
-	end	
+	return index and icons[index] or ""
 end
 
 local onEvent = function(self, event, _, eventType, _, sourceName, sourceFlags, destGUID, destName, destFlags, ...)
