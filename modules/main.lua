@@ -38,7 +38,7 @@ end
 local icons = {"{star}", "{circle}", "{diamond}", "{triangle}", "{moon}", "{square}", "{cross}", "{skull}"}
 
 local getUnitIcon = function(unit)
-	local index = GetRaidTargetIndex(unit)
+	local index = unit and GetRaidTargetIndex(unit) or nil
 	return index and icons[index] or ""
 end
 
