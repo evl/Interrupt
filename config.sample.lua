@@ -1,4 +1,7 @@
-evl_Interrupt.config.party = {"PARTY"}
-evl_Interrupt.config.raid = {"CHANNEL", "classchannel"}
-evl_Interrupt.config.solo = nil
-evl_Interrupt.config.ignoreUnaffiliated = true
+local addonName, addon = ...
+local config = addon.config
+
+config.party = "PARTY"
+config.raid = {"CHANNEL", "classchannel"}
+config.solo = nil
+config.ignoreUnaffiliated = true

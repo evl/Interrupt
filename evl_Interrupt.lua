@@ -7,6 +7,7 @@ addon.config = {
 	ignoreUnaffiliated = true,
 }
 
+local config = addon.config
 local frame = CreateFrame("Frame")
 local interruptSpells = {
 	[1766] = "Kick",
@@ -31,10 +32,10 @@ local announce = function(message)
 	if destination then
 		message = message .. "   " -- We use this to filter
 
-		if #destination == 1 then
-			SendChatMessage(message, destination[1])
-		elseif #destination == 2 then
+		if type(destination) == "table" then
 			SendChatMessage(message, destination[1], nil, GetChannelName(destination[2]))
+		else
+			SendChatMessage(message, destination)
 		end
 	end
 end
@@ -103,7 +104,7 @@ local onEvent = function(self, event, _, eventType, _, sourceName, sourceFlags, 
 	end
 end
 
-frame:SetScript("OnEvent", OnEvent)
+frame:SetScript("OnEvent", onEvent)
 
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
