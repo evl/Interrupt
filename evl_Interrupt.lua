@@ -1,7 +1,7 @@
 local addonName, addon = ...
 
 addon.config = {
-	party = {"PARTY"},
+	party = "PARTY",
 	raid = nil,
 	solo = nil,
 	ignoreUnaffiliated = true,
