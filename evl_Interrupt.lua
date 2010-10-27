@@ -3,6 +3,7 @@ local addonName, addon = ...
 addon.config = {
 	party = "PARTY",
 	raid = nil,
+	battleground = nil,
 	solo = nil,
 	ignoreUnaffiliated = true,
 }
@@ -21,9 +22,11 @@ local interruptSpells = {
 local announce = function(message)
 	local destination
 	
-	if GetNumRaidMembers() > 0 then
+	if UnitInBattleground("player") then
+		destination = config.battleground
+	elseif UnitInRaid("player") then
 		destination = config.raid
-	elseif GetNumPartyMembers() > 0 then
+	elseif UnitInParty("player") then
 		destination = config.party
 	else
 		destination = config.solo
