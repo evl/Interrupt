@@ -24,9 +24,9 @@ local announce = function(message)
 	
 	if UnitInBattleground("player") then
 		destination = config.battleground
-	elseif UnitInRaid("player") then
+	elseif GetNumRaidMembers() > 0 then
 		destination = config.raid
-	elseif UnitInParty("player") then
+	elseif GetNumPartyMembers() > 0 then
 		destination = config.party
 	else
 		destination = config.solo
