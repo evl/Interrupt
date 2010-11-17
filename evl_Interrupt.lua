@@ -6,6 +6,7 @@ addon.config = {
 	battleground = nil,
 	solo = nil,
 	ignoreUnaffiliated = true,
+	reportMiss = true
 }
 
 local config = addon.config
@@ -90,7 +91,7 @@ local onEvent = function(self, event, _, eventType, _, sourceName, sourceFlags, 
 						announce(format("Used %s on %s%s", spellName, destIcon, destName))
 					end
 				end
-			elseif eventType == "SPELL_MISSED" and interruptSpells[spellId] then
+			elseif config.reportMiss and eventType == "SPELL_MISSED" and interruptSpells[spellId] then
 				local _, spellName, _, missType = ...
 				local destUnit = resolveUnit(destGUID)
 		    local destIcon = getUnitIcon(destUnit)

@@ -6,3 +6,4 @@ config.raid = {"CHANNEL", "classchannel"}
 config.battleground = nil
 config.solo = nil
 config.ignoreUnaffiliated = true
+config.reportMiss = true
